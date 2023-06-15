@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "typeRoots": ["./types"],
+    "target": "es2016",
+    "module": "CommonJS",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "inlineSourceMap": true,
+    "removeComments": true
+  }
+}
