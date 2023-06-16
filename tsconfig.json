@@ -6,7 +6,6 @@
     "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
-    "inlineSourceMap": true,
     "removeComments": true
   }
 }

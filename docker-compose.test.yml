@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  api:
+    build:
+      context: .
+      target: dev
+      args:
+        - NODE_ENV=development
+    volumes:
+      - ./:/app:ro
+    command: npm run test
+
+  nginx:
+    ports:
+      - "3000:80"

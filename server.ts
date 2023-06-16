@@ -3,8 +3,6 @@ import "express-async-errors";
 
 import express from "express";
 import cors from "cors";
-// @ts-ignore
-import xss from "xss-clean";
 import { rateLimit } from "express-rate-limit";
 
 import helmet from "helmet";
@@ -28,7 +26,6 @@ app.use(express.json());
 
 app.use(helmet());
 app.use(cors());
-app.use(xss());
 
 // app.use("/imgs", express.static("./imgs"));
 
