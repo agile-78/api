@@ -1,8 +1,10 @@
-FROM node:18 as dev
+FROM node:18 as base
 
 WORKDIR /app
 
 COPY package*.json .
+
+FROM base as dev
 
 RUN npm install
 
@@ -18,12 +20,12 @@ RUN if [ "$NODE_ENV" = "production" ]; \
         then npm run build; \
         fi
 
+FROM dev as test
 
-FROM node:15 as prod
+CMD ["npm", "run", "test"]
 
-WORKDIR /app
 
-COPY package*.json .
+FROM base as prod
 
 RUN npm ci --only=production
 
