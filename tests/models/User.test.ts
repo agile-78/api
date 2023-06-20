@@ -1,5 +1,5 @@
-import { before, describe } from "mocha";
-import { IUser, IUserMethods, User, UserModel } from "../../models/User";
+import { describe } from "mocha";
+import { IUser, IUserMethods, User } from "../../models/User";
 import { assert, expect, use } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { JwtPayload, verify } from "jsonwebtoken";
@@ -23,12 +23,19 @@ describe("User model", () => {
     contact_number: "12345",
   };
 
-  before(async () => {
+  beforeEach(async () => {
     user = await User.create(userData);
   });
 
   it("created a user and saved successfully", async () => {
     createModelTest(user, User, userData, ["password"]);
+  });
+
+  it("user with duplicate email should not be created", async () => {
+    const createUserWithDuplicateEmail = async () =>
+      await User.create(userData);
+
+    await expect(createUserWithDuplicateEmail()).to.be.rejected;
   });
 
   it("password is hashed", () => {
@@ -47,7 +54,7 @@ describe("User model", () => {
   });
 
   it("correct payload is sent in jwt token", async () => {
-    const token = await user.createJWT();
+    const token = user.createJWT();
     const payload = verify(token, JWT_SECRET) as JwtPayload;
     expect(payload.id).to.equal(user._id.toString());
     expect(payload).to.have.property("exp");
