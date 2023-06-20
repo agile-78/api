@@ -1,5 +1,5 @@
 import { before, describe } from "mocha";
-import { User } from "../../models/User";
+import { IUser, IUserMethods, User, UserModel } from "../../models/User";
 import { assert, expect, use } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { JwtPayload, verify } from "jsonwebtoken";
@@ -10,7 +10,7 @@ import { Error } from "mongoose";
 use(chaiAsPromised);
 
 describe("User model", () => {
-  let user: any;
+  let user: IUser & IUserMethods;
   const userData = {
     name: "Test",
     email: "test@gmail.com",
@@ -23,7 +23,7 @@ describe("User model", () => {
     user = await User.create(userData);
   });
 
-  it("created a and saved successfully", async () => {
+  it("created a user and saved successfully", async () => {
     assert.notEqual(user, undefined);
     expect(user).to.have.property("_id");
     expect(user).to.have.property("name").to.equal("Test");
@@ -51,7 +51,7 @@ describe("User model", () => {
   it("correct payload is sent in jwt token", async () => {
     const token = await user.createJWT();
     const payload = verify(token, JWT_SECRET) as JwtPayload;
-    expect(payload.id).to.equal(user.id);
+    expect(payload.id).to.equal(user._id.toString());
     expect(payload).to.have.property("exp");
   });
 
