@@ -1,8 +1,14 @@
 import { after, before } from "mocha";
 
-import { dropCollections, dropDatabase, setup } from "./utils/db";
+import {
+  closeConnection,
+  dropCollections,
+  dropDatabase,
+  setup,
+} from "./utils/db";
 before(async () => {
   await setup();
+  await dropDatabase();
 });
 
 afterEach(async () => {
@@ -12,4 +18,5 @@ afterEach(async () => {
 
 after(async () => {
   await dropDatabase();
+  await closeConnection();
 });

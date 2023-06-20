@@ -5,12 +5,18 @@ import { MONGO_URI } from "../../config/constant";
 let mongo: any;
 
 export async function setup() {
+  if (mongo) return;
   mongo = await connectDB(MONGO_URI);
 }
 
 export async function dropDatabase() {
   if (mongo) {
     await mongoose.connection.dropDatabase();
+  }
+}
+
+export async function closeConnection() {
+  if (mongo) {
     await mongoose.connection.close();
   }
 }
