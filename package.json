@@ -9,6 +9,7 @@
     "dev": "nodemon index.ts",
     "test": "ts-mocha 'tests/**/*.ts' --recursive",
     "docker-dev": "sudo docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d",
+    "docker-build-test": "sudo docker compose -f docker-compose.yml -f docker-compose.test.yml up --build -d",
     "docker-test": "sudo docker compose -f docker-compose.yml -f docker-compose.test.yml run api npm run test",
     "docker-prod": "sudo docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d"
   },
