@@ -6,6 +6,10 @@ import { JwtPayload, verify } from "jsonwebtoken";
 import { JWT_SECRET } from "../../config/constant";
 
 import { Error } from "mongoose";
+import {
+  cannotCreateModelWithoutRequiredFieldsTest,
+  createModelTest,
+} from "../utils/helpers";
 
 use(chaiAsPromised);
 
@@ -24,13 +28,7 @@ describe("User model", () => {
   });
 
   it("created a user and saved successfully", async () => {
-    assert.notEqual(user, undefined);
-    expect(user).to.have.property("_id");
-    expect(user).to.have.property("name").to.equal("Test");
-    expect(user).to.have.property("email").to.equal("test@gmail.com");
-    expect(user).to.have.property("address").to.equal("address");
-    expect(user).to.have.property("contact_number").to.equal("12345");
-    expect(user).to.be.an.instanceOf(User);
+    createModelTest(user, User, userData, ["password"]);
   });
 
   it("password is hashed", () => {
@@ -70,17 +68,11 @@ describe("User model", () => {
   });
 
   it("user without required fields are not created", async () => {
-    const createUserWithoutRequiredFields = async () => await User.create({});
-
-    await expect(createUserWithoutRequiredFields()).to.be.rejectedWith(
-      Error.ValidationError
-    );
-
-    try {
-      await createUserWithoutRequiredFields();
-    } catch (e: any) {
-      expect(e.errors).to.include.all.keys(["name", "password", "email"]);
-    }
+    await cannotCreateModelWithoutRequiredFieldsTest(User, [
+      "name",
+      "password",
+      "email",
+    ]);
   });
 
   it("user is created without unrequired fields", async () => {
