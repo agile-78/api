@@ -6,7 +6,7 @@ services:
       context: .
       target: test
       args:
-        - NODE_ENV=development
+        - NODE_ENV=test
     volumes:
       - ./:/app:ro
     command: npm run test
