@@ -8,7 +8,7 @@ import {
 } from "./utils/db";
 before(async () => {
   await setup();
-  await dropDatabase();
+  await dropCollections();
 });
 
 afterEach(async () => {

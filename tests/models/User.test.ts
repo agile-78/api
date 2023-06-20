@@ -34,7 +34,6 @@ describe("User model", () => {
   it("user with duplicate email should not be created", async () => {
     const createUserWithDuplicateEmail = async () =>
       await User.create(userData);
-
     await expect(createUserWithDuplicateEmail()).to.be.rejected;
   });
 
