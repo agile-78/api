@@ -1,4 +1,3 @@
-import "dotenv/config";
 import "express-async-errors";
 
 import express from "express";
@@ -10,6 +9,7 @@ import helmet from "helmet";
 // middleware
 import { notFound } from "./middleware/not-found";
 import { errorHandler } from "./middleware/error-handler";
+import { authRoutes } from "./routes";
 
 export const app = express();
 
@@ -29,9 +29,7 @@ app.use(cors());
 
 // app.use("/imgs", express.static("./imgs"));
 
-app.use("/", (req, res) => {
-  res.send("<h1>Hello world</h1>");
-});
+app.use("/api/v1/auth", authRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
