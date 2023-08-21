@@ -40,6 +40,20 @@ export async function cannotCreateModelWithoutRequiredFieldsTest<T>(
   }
 }
 
+export async function NotFoundErrorisThrownForInvalidId(
+  controller: (req: Request, res: Response) => Promise<void>,
+  id = "62a23958e5a9e9b88f853a67"
+) {
+  const req = {
+    params: {
+      id,
+    },
+  } as Partial<Request> as Request;
+  const { res, status } = createFakeResponse();
+  await expect(controller(req, res)).to.be.rejectedWith(NotFoundError);
+  assert.isTrue(status.notCalled, "There should be no response");
+}
+
 export function createFakeResponse(
   sendCallBack: (data: any) => void = () => {}
 ) {
