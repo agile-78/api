@@ -10,3 +10,4 @@ export const MONGO_URI =
   `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/?authSource=admin`;
 export const JWT_SECRET = process.env.JWT_SECRET || "test";
 export const JWT_LIFETIME = process.env.JWT_LIFETIME || "2 days";
+export const MIME_TYPES = ["image/jpg", "image/png", "image/jpeg"];
