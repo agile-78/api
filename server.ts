@@ -10,6 +10,7 @@ import helmet from "helmet";
 import { notFound } from "./middleware/not-found";
 import { errorHandler } from "./middleware/error-handler";
 import { authRoutes, userRoutes } from "./routes";
+import { auth } from "./middleware/auth";
 
 export const app = express();
 
@@ -30,6 +31,9 @@ app.use(cors());
 // app.use("/imgs", express.static("./imgs"));
 
 app.use("/api/v1/auth", authRoutes);
+
+app.use(auth);
+
 app.use("/api/v1/users", userRoutes);
 
 app.use(notFound);
