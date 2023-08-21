@@ -7,10 +7,8 @@ import { rateLimit } from "express-rate-limit";
 import helmet from "helmet";
 
 // middleware
-import { notFound } from "./middleware/not-found";
-import { errorHandler } from "./middleware/error-handler";
+import { auth, notFound, errorHandler } from "./middleware";
 import { authRoutes, userRoutes } from "./routes";
-import { auth } from "./middleware/auth";
 
 export const app = express();
 
