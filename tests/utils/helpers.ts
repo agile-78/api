@@ -1,5 +1,8 @@
 import { assert, expect } from "chai";
 import { Error } from "mongoose";
+import { Request, Response } from "express";
+import Sinon from "sinon";
+import { NotFoundError } from "../../errors";
 
 export function createModelTest<T, S, D>(
   instance: T,
@@ -35,4 +38,21 @@ export async function cannotCreateModelWithoutRequiredFieldsTest<T>(
   } catch (e: any) {
     expect(e.errors).to.include.all.keys(requiredFields);
   }
+}
+
+export function createFakeResponse(
+  sendCallBack: (data: any) => void = () => {}
+) {
+  const res = {} as Response;
+  const status = Sinon.fake.returns(res);
+  res.status = status;
+  res.send = (data) => {
+    sendCallBack(data);
+    return res;
+  };
+
+  return {
+    res,
+    status,
+  };
 }
