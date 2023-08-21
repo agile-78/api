@@ -1,30 +1,26 @@
 import { assert, expect, use } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { login, register } from "../../controllers/auth";
-import { Request, Response } from "express";
+import { Request } from "express";
 import {
   BadRequestError,
   NotFoundError,
   UnAuthenticatedError,
 } from "../../errors";
 import { User } from "../../models/User";
-import sinon from "sinon";
 import { StatusCodes } from "http-status-codes";
 import { verify } from "jsonwebtoken";
 import { JWT_SECRET } from "../../config/constant";
+import { createFakeResponse } from "../utils/helpers";
 
 use(chaiAsPromised);
 
 describe("Auth controller", () => {
   describe("register", () => {
-    const res = {} as Response;
     let token: string;
-    const status = sinon.fake.returns(res);
-    res.status = status;
-    res.send = (data) => {
+    const { res, status } = createFakeResponse((data) => {
       token = data.token;
-      return res;
-    };
+    });
 
     it("jwt is returned for successfully signin", async () => {
       const mockRequest = {
@@ -44,10 +40,7 @@ describe("Auth controller", () => {
   });
 
   describe("login", () => {
-    const res = {} as Response;
-
-    res.status = sinon.fake.returns(res);
-    res.send = sinon.fake.returns(res);
+    const { res, status } = createFakeResponse();
 
     it("BadRequest is thrown for requests without required params", async () => {
       const mockRequest = {
@@ -86,7 +79,7 @@ describe("Auth controller", () => {
       );
     });
 
-    it("correct user is able to login", async () => {
+    it("Correct user is able to login", async () => {
       const userData = {
         name: "test",
         email: "test@gmail.com",
@@ -99,6 +92,7 @@ describe("Auth controller", () => {
       } as Request;
 
       await expect(login(mockRequest, res)).to.eventually.fulfilled;
+      assert.isTrue(status.calledOnceWith(StatusCodes.OK));
     });
   });
 });
