@@ -9,7 +9,7 @@ import helmet from "helmet";
 // middleware
 import { notFound } from "./middleware/not-found";
 import { errorHandler } from "./middleware/error-handler";
-import { authRoutes } from "./routes";
+import { authRoutes, userRoutes } from "./routes";
 
 export const app = express();
 
@@ -30,6 +30,7 @@ app.use(cors());
 // app.use("/imgs", express.static("./imgs"));
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/users", userRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
