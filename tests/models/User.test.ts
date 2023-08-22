@@ -20,7 +20,7 @@ describe("User model", () => {
     email: "test@gmail.com",
     password: "password123",
     address: "address",
-    contact_number: "12345",
+    contactNumber: "12345",
   };
 
   beforeEach(async () => {
@@ -90,6 +90,6 @@ describe("User model", () => {
 
     expect(user).to.be.an.instanceOf(User);
     expect(user).to.have.property("address").to.be.undefined;
-    expect(user).to.have.property("contact_number").to.be.undefined;
+    expect(user).to.have.property("contactNumber").to.be.undefined;
   });
 });
