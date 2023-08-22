@@ -10,6 +10,7 @@ export interface IUser {
   password: string;
   address?: string;
   contact_number?: string;
+  profile_pic?: string;
 }
 
 export interface IUserMethods {
