@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { CustomApiError } from "../errors";
-
+import { MongoServerError } from "mongodb";
 export async function errorHandler(
-  err: any,
+  err: MongoServerError | CustomApiError,
   req: Request,
   res: Response,
   next: NextFunction
