@@ -11,3 +11,4 @@ export const MONGO_URI =
 export const JWT_SECRET = process.env.JWT_SECRET || "test";
 export const JWT_LIFETIME = process.env.JWT_LIFETIME || "2 days";
 export const MIME_TYPES = ["image/jpg", "image/png", "image/jpeg"];
+export const IMAGE_SIZE_LIMIT = process.env.IMAGE_SIZE_LIMIT || 5 * 1024 * 1024;

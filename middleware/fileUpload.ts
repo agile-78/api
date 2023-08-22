@@ -1,5 +1,5 @@
 import multer from "multer";
-import { MIME_TYPES } from "../config/constant";
+import { IMAGE_SIZE_LIMIT, MIME_TYPES } from "../config/constant";
 import { BadRequestError } from "../errors";
 
 export const storage = multer.diskStorage({
@@ -14,7 +14,7 @@ export const storage = multer.diskStorage({
 export const fileUpload = multer({
   limits: {
     // 5 mb
-    fileSize: 5 * 1024 * 1024,
+    fileSize: IMAGE_SIZE_LIMIT,
   },
   storage,
   fileFilter: (req, file, cb) => {
