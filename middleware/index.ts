@@ -1,3 +1,3 @@
-export { errorHandler } from "./error-handler";
+export { errorHandler } from "./errorHandler";
 export { notFound } from "./not-found";
 export { auth } from "./auth";
