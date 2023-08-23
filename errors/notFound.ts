@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import { CustomApiError } from "./custom-error";
+import { CustomApiError } from "./customError";
 
 export class NotFoundError extends CustomApiError {
   public status: number;

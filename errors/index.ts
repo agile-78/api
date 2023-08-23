@@ -1,5 +1,5 @@
-export { CustomApiError } from "./custom-error";
-export { NotFoundError } from "./not-found";
+export { CustomApiError } from "./customError";
+export { NotFoundError } from "./notFound";
 export { UnAuthenticatedError } from "./unaunthenticated";
 export { UnAuthorizedError } from "./unauthorized";
 export { BadRequestError } from "./badrequest";
