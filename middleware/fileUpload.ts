@@ -13,7 +13,6 @@ export const storage = multer.diskStorage({
 
 export const fileUpload = multer({
   limits: {
-    // 5 mb
     fileSize: IMAGE_SIZE_LIMIT,
   },
   storage,

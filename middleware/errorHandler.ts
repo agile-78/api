@@ -2,6 +2,9 @@ import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { CustomApiError } from "../errors";
 import { MongoServerError } from "mongodb";
+
+import { MulterError } from "multer";
+
 export async function errorHandler(
   err: MongoServerError | CustomApiError,
   req: Request,
@@ -12,6 +15,14 @@ export async function errorHandler(
     return res.status(err.status as number).send({
       err: {
         message: err.message,
+      },
+    });
+  }
+
+  if (err instanceof MulterError) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      err: {
+        message: "There was an error in uploading image",
       },
     });
   }
