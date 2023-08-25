@@ -9,7 +9,8 @@ export interface IUser {
   email: string;
   password: string;
   address?: string;
-  contact_number?: string;
+  contactNumber?: string;
+  profilePic?: string;
 }
 
 export interface IUserMethods {
@@ -40,9 +41,12 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
     type: String,
     maxlength: 100,
   },
-  contact_number: {
+  contactNumber: {
     type: String,
     maxlength: 50,
+  },
+  profilePic: {
+    type: String,
   },
 });
 

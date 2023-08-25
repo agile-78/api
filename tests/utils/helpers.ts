@@ -3,6 +3,8 @@ import { Error } from "mongoose";
 import { Request, Response } from "express";
 import Sinon from "sinon";
 import { NotFoundError } from "../../errors";
+import { User } from "../../models/User";
+import { writeFile } from "fs/promises";
 
 export function createModelTest<T, S, D>(
   instance: T,
@@ -69,4 +71,24 @@ export function createFakeResponse(
     res,
     status,
   };
+}
+
+export async function createDummyUser(body?: any) {
+  return await User.create({
+    name: "test",
+    email: "test@gmail.com",
+    password: "password123",
+    ...body,
+  });
+}
+
+export async function createDummyUserWithProfilePic() {
+  const profilePic = "./tests/assets/profilePic.png";
+  await writeFile(profilePic, "abc");
+
+  const user = await createDummyUser({
+    profilePic,
+  });
+
+  return user;
 }

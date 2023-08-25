@@ -10,6 +10,7 @@ import {
 export async function register(req: Request, res: Response) {
   const user = await User.create({
     ...req.body,
+    profilePic: req.file?.path || null,
   });
   const token = user.createJWT();
   res.status(StatusCodes.CREATED).send({
