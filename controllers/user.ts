@@ -12,6 +12,10 @@ export const deleteUser = async (req: Request, res: Response) => {
     throw new NotFoundError(`No user with id ${id}`);
   }
 
+  if (user.profilePic) {
+    unlink(user.profilePic);
+  }
+
   res.status(StatusCodes.NO_CONTENT).send();
 };
 
