@@ -45,6 +45,9 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
     type: String,
     maxlength: 50,
   },
+  profilePic: {
+    type: String,
+  },
 });
 
 UserSchema.pre("save", async function () {
