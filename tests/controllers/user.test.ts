@@ -35,9 +35,9 @@ describe("User controller", () => {
         file: {
           path: "./tests/assets/new.png",
         } as any,
-      } as Partial<Request>;
+      } as Partial<Request> as Request;
 
-      await expect(updateUser(req as any, res)).to.eventually.fulfilled;
+      await expect(updateUser(req, res)).to.eventually.fulfilled;
       expect(user).property("profilePic").to.be.equal("./tests/assets/new.png");
 
       await expect(access(imagePath, constants.F_OK)).to.be.rejectedWith(Error);
@@ -58,10 +58,9 @@ describe("User controller", () => {
         params: {
           id: user._id as unknown as string,
         },
-      } as Partial<Request>;
+      } as Partial<Request> as Request;
 
-      await expect(updateUser(mockRequest as Request, res)).to.eventually
-        .fulfilled;
+      await expect(updateUser(mockRequest, res)).to.eventually.fulfilled;
       assert.isTrue(status.calledOnceWith(StatusCodes.OK));
       expect(updatedUser.name).to.equal("updated");
     });
@@ -84,6 +83,20 @@ describe("User controller", () => {
       await expect(deleteUser(req, res)).to.be.eventually.fulfilled;
       await expect(User.findById(user._id)).to.eventually.be.null;
       assert.isTrue(status.calledOnceWith(StatusCodes.NO_CONTENT));
+    });
+
+    it("Profile pic is deleted when user is deleted from database", async () => {
+      const user = await createDummyUserWithProfilePic();
+      const { res } = createFakeResponse();
+      const req = {
+        params: {
+          id: user._id as unknown,
+        },
+      } as Partial<Request> as Request;
+      await expect(deleteUser(req, res)).to.be.eventually.fulfilled;
+      await expect(
+        access(user.profilePic as string, constants.F_OK)
+      ).to.be.rejectedWith(Error);
     });
   });
 });
