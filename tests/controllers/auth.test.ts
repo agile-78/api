@@ -9,9 +9,10 @@ import {
 } from "../../errors";
 import { User } from "../../models/User";
 import { StatusCodes } from "http-status-codes";
-import { verify } from "jsonwebtoken";
+import { Jwt, verify } from "jsonwebtoken";
 import { JWT_SECRET } from "../../config/constant";
 import { createFakeResponse } from "../utils/helpers";
+import { JwtPayload } from "../../types/jsonwebtoken";
 
 use(chaiAsPromised);
 
@@ -22,20 +23,43 @@ describe("Auth controller", () => {
       token = data.token;
     });
 
-    it("jwt is returned for successfully signin", async () => {
-      const mockRequest = {
-        body: {
-          name: "Test",
-          email: "test@gmail.com",
-          password: "password123",
-        },
-      } as Request;
+    const mockRequest = {
+      body: {
+        name: "Test",
+        email: "test@gmail.com",
+        password: "password123",
+      },
+    } as Request;
 
+    it("jwt is returned for successfully signin", async () => {
       await expect(register(mockRequest, res)).to.eventually.fulfilled;
 
       assert.isTrue(status.calledOnce);
       assert.isTrue(status.calledWith(StatusCodes.CREATED));
       expect(verify(token, JWT_SECRET)).to.be.ok;
+    });
+
+    it("handle profilePic correctly", async () => {
+      let token: string = "";
+      const { res } = createFakeResponse((data) => {
+        token = data.token;
+      });
+
+      const path = "./tests/assets/profilePic.png";
+      await expect(
+        register(
+          {
+            ...mockRequest,
+            file: {
+              path,
+            } as any,
+          } as Request,
+          res
+        )
+      ).to.eventually.fulfilled;
+      const { id } = verify(token, JWT_SECRET) as JwtPayload;
+      const user = await User.findById(id).select("profilePic");
+      expect(user).property("profilePic").to.equals(path);
     });
   });
 
