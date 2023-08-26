@@ -5,6 +5,6 @@ import { fileUpload } from "../middleware/fileUpload";
 export const router = Router();
 
 router
-  .route("/users")
+  .route("/users/:id")
   .patch(fileUpload.single("profilePic"), updateUser)
   .delete(deleteUser);
