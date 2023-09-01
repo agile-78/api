@@ -8,7 +8,7 @@ import helmet from "helmet";
 
 // middleware
 import { auth, notFound, errorHandler } from "./middleware";
-import { authRoutes, userRoutes } from "./routes";
+import { authRoutes, rewardRoutes, userRoutes } from "./routes";
 
 export const app = express();
 
@@ -33,6 +33,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use(auth);
 
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/rewards", rewardRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
