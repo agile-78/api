@@ -13,6 +13,8 @@ import {
   rewardRoutes,
   redemptionRoutes,
   userRoutes,
+  materialRoutes,
+  activityRoutes,
 } from "./routes";
 
 export const app = express();
@@ -40,6 +42,8 @@ app.use(auth);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/rewards", rewardRoutes);
 app.use("/api/v1/redemptions", redemptionRoutes);
+app.use("/api/v1/material", materialRoutes);
+app.use("/api/v1/activity", activityRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
