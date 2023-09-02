@@ -13,17 +13,21 @@ import {
 } from "../utils/helpers";
 import { IUser, IUserMethods, User } from "../../models/User";
 import { Schema, Error } from "mongoose";
+import { IReward, IRewardMethods, Reward } from "../../models/Reward";
 
 use(chaiAsPromised);
 
 describe("Redemption model", () => {
   let redemption: IRedemption & IRedemptionMethods;
   let user: IUser & IUserMethods;
+  let reward: IReward & IRewardMethods;
 
   const redemptionData: {
     userId: null | Schema.Types.ObjectId;
+    rewardId: null | Schema.Types.ObjectId;
   } = {
     userId: null,
+    rewardId: null,
   };
 
   beforeEach(async () => {
@@ -33,7 +37,15 @@ describe("Redemption model", () => {
       password: "password123",
     });
 
+    reward = await Reward.create({
+      title: "test reward 5$",
+      points: 30,
+      logo: "./tests/assets/profilePic.png",
+    });
+
     redemptionData.userId = user._id;
+
+    redemptionData.rewardId = reward._id;
 
     redemption = await Redemption.create(redemptionData);
   });
@@ -43,13 +55,17 @@ describe("Redemption model", () => {
   });
 
   it("Redemption without required fields are not created", async () => {
-    await cannotCreateModelWithoutRequiredFieldsTest(Redemption, ["userId"]);
+    await cannotCreateModelWithoutRequiredFieldsTest(Redemption, [
+      "userId",
+      "rewardId",
+    ]);
   });
 
-  it("a redemption is not created with invalid userId", async () => {
+  it("a redemption is not created with invalid userId & rewardId", async () => {
     expect(
       Redemption.create({
         userId: "ererr3",
+        rewardId: "erere",
       })
     ).to.be.rejectedWith(Error.ValidationError);
   });
