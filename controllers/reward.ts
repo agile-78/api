@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import { Reward } from "../models/Reward";
+import { Reward } from "../models";
 import { Request, Response } from "express";
 
 export async function create(req: Request, res: Response) {

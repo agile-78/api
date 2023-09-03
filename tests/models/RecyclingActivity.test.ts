@@ -3,7 +3,7 @@ import {
   IRecyclingActivity,
   IRecyclingActivityMethods,
   RecyclingActivity,
-} from "../../models/RecyclingActivity";
+} from "../../models";
 import { use } from "chai";
 import chaiAsPromised from "chai-as-promised";
 
@@ -12,12 +12,12 @@ import {
   createDummyUser,
   createModelTest,
 } from "../utils/helpers";
-import { IUser, IUserMethods, User } from "../../models/User";
+import { IUser, IUserMethods, User } from "../../models";
 import {
   IRecyclingMaterial,
   IRecyclingMaterialMethods,
   RecyclingMaterial,
-} from "../../models/RecyclingMaterial";
+} from "../../models";
 
 use(chaiAsPromised);
 

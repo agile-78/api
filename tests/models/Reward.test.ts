@@ -1,5 +1,5 @@
 import { describe } from "mocha";
-import { IReward, IRewardMethods, Reward } from "../../models/Reward";
+import { IReward, IRewardMethods, Reward } from "../../models";
 import { use } from "chai";
 import chaiAsPromised from "chai-as-promised";
 

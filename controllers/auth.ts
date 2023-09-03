@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { User } from "../models/User";
+import { User } from "../models";
 import { StatusCodes } from "http-status-codes";
 import {
   BadRequestError,

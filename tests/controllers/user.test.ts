@@ -8,7 +8,7 @@ import {
   createFakeResponse,
 } from "../utils/helpers";
 import { deleteUser, updateUser } from "../../controllers/user";
-import { User, UserModel } from "../../models/User";
+import { User, UserModel } from "../../models";
 import { StatusCodes } from "http-status-codes";
 import { access } from "fs/promises";
 import { constants } from "fs";

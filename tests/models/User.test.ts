@@ -1,5 +1,5 @@
 import { describe } from "mocha";
-import { IUser, IUserMethods, User } from "../../models/User";
+import { IUser, IUserMethods, User } from "../../models";
 import { assert, expect, use } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { JwtPayload, verify } from "jsonwebtoken";

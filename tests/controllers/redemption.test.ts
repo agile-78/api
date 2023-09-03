@@ -3,8 +3,8 @@ import { createFakeResponse } from "../utils/helpers";
 import { Request } from "express";
 import { create } from "../../controllers/redemption";
 import { expect } from "chai";
-import { IUser, IUserMethods, User } from "../../models/User";
-import { IReward, IRewardMethods, Reward } from "../../models/Reward";
+import { IUser, IUserMethods, User } from "../../models";
+import { IReward, IRewardMethods, Reward } from "../../models";
 
 describe("Redemption Controller", () => {
   describe("post", () => {

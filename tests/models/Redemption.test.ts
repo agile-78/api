@@ -1,9 +1,5 @@
 import { describe } from "mocha";
-import {
-  IRedemption,
-  IRedemptionMethods,
-  Redemption,
-} from "../../models/Redemption";
+import { IRedemption, IRedemptionMethods, Redemption } from "../../models";
 import { expect, use } from "chai";
 import chaiAsPromised from "chai-as-promised";
 
@@ -11,9 +7,9 @@ import {
   cannotCreateModelWithoutRequiredFieldsTest,
   createModelTest,
 } from "../utils/helpers";
-import { IUser, IUserMethods, User } from "../../models/User";
+import { IUser, IUserMethods, User } from "../../models";
 import { Schema, Error } from "mongoose";
-import { IReward, IRewardMethods, Reward } from "../../models/Reward";
+import { IReward, IRewardMethods, Reward } from "../../models";
 
 use(chaiAsPromised);
 

@@ -3,7 +3,7 @@ import { Error } from "mongoose";
 import { Request, Response } from "express";
 import Sinon from "sinon";
 import { NotFoundError } from "../../errors";
-import { User } from "../../models/User";
+import { User } from "../../models";
 import { writeFile } from "fs/promises";
 
 export function createModelTest<T, S, D>(

@@ -2,18 +2,15 @@ import { describe } from "mocha";
 import { createDummyUser, createFakeResponse } from "../utils/helpers";
 import { Request } from "express";
 import { assert, expect } from "chai";
-import {
-  IRecyclingActivity,
-  IRecyclingActivityMethods,
-} from "../../models/RecyclingActivity";
+import { IRecyclingActivity, IRecyclingActivityMethods } from "../../models";
 import { create } from "../../controllers/activity";
 import { StatusCodes } from "http-status-codes";
-import { IUser, IUserMethods } from "../../models/User";
+import { IUser, IUserMethods } from "../../models";
 import {
   IRecyclingMaterial,
   IRecyclingMaterialMethods,
   RecyclingMaterial,
-} from "../../models/RecyclingMaterial";
+} from "../../models";
 
 describe("materi Controller", () => {
   describe("post", () => {

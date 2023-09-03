@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { User } from "../models/User";
+import { User } from "../models";
 import { NotFoundError } from "../errors";
 import { StatusCodes } from "http-status-codes";
 import { unlink } from "fs/promises";

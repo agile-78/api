@@ -2,10 +2,7 @@ import { describe } from "mocha";
 import { createFakeResponse } from "../utils/helpers";
 import { Request } from "express";
 import { assert, expect } from "chai";
-import {
-  IRecyclingMaterial,
-  IRecyclingMaterialMethods,
-} from "../../models/RecyclingMaterial";
+import { IRecyclingMaterial, IRecyclingMaterialMethods } from "../../models";
 import { create } from "../../controllers/material";
 import { StatusCodes } from "http-status-codes";
 

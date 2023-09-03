@@ -3,7 +3,7 @@ import {
   IRecyclingMaterial,
   IRecyclingMaterialMethods,
   RecyclingMaterial,
-} from "../../models/RecyclingMaterial";
+} from "../../models";
 import { use } from "chai";
 import chaiAsPromised from "chai-as-promised";
 
