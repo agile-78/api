@@ -25,7 +25,7 @@ export const updateUser = async (req: Request, res: Response) => {
   if (req.file?.path) {
     const oldUser = await User.findById(id).select("profilePic");
     if (oldUser?.profilePic) {
-      unlink(oldUser.profilePic);
+      await unlink(oldUser.profilePic);
     }
 
     req.body["profilePic"] = req.file.path;
