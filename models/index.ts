@@ -10,4 +10,4 @@ export {
 } from "./RecyclingMaterial";
 export { Redemption, IRedemption, IRedemptionMethods } from "./Redemption";
 export { Reward, IReward, IRewardMethods } from "./Reward";
-export { User, IUser, IUserMethods } from "./User";
+export { User, IUser, IUserMethods, UserModel } from "./User";

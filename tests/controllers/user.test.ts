@@ -7,8 +7,16 @@ import {
   createDummyUserWithProfilePic,
   createFakeResponse,
 } from "../utils/helpers";
-import { deleteUser, updateUser } from "../../controllers/user";
-import { User, UserModel } from "../../models";
+import { deleteUser, getUserPoints, updateUser } from "../../controllers/user";
+import {
+  IUser,
+  User,
+  UserModel,
+  Redemption,
+  RecyclingActivity,
+  RecyclingMaterial,
+  Reward,
+} from "../../models";
 import { StatusCodes } from "http-status-codes";
 import { access } from "fs/promises";
 import { constants } from "fs";
@@ -97,6 +105,50 @@ describe("User controller", () => {
       await expect(
         access(user.profilePic as string, constants.F_OK)
       ).to.be.rejectedWith(Error);
+    });
+  });
+
+  describe("get points", () => {
+    let user: IUser;
+    before(async () => {
+      user = await createDummyUser();
+      let reward = await Reward.create({
+        title: "test reard",
+        points: 30,
+        logo: "invalid.png",
+      });
+      let redemption = await Redemption.create({
+        userId: user._id,
+        rewardId: reward._id,
+      });
+
+      let material = await RecyclingMaterial.create({
+        name: "test material",
+        points: 30,
+      });
+      let activity = await RecyclingActivity.create({
+        userId: user._id,
+        materialId: material._id,
+        quantity: 2,
+      });
+    });
+
+    it("return the correct status and points", async () => {
+      let points: number;
+      const { res, status } = createFakeResponse((data) => {
+        points = data.points;
+      });
+
+      await expect(
+        getUserPoints(
+          {
+            params: {
+              id: user._id as unknown,
+            },
+          } as Partial<Request> as Request,
+          res
+        )
+      ).to.fulfilled;
     });
   });
 });

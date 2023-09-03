@@ -3,6 +3,8 @@ import { User } from "../models";
 import { NotFoundError } from "../errors";
 import { StatusCodes } from "http-status-codes";
 import { unlink } from "fs/promises";
+import { queryUserPoints } from "../utils/point";
+import { Schema } from "mongoose";
 
 export const deleteUser = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -43,5 +45,13 @@ export const updateUser = async (req: Request, res: Response) => {
 
   res.status(StatusCodes.OK).send({
     user,
+  });
+};
+
+export const getUserPoints = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  res.status(StatusCodes.OK).send({
+    points: await queryUserPoints(id as unknown as Schema.Types.ObjectId),
   });
 };
