@@ -1,6 +1,6 @@
 import "dotenv/config";
 
-export const PORT = 3000 || process.env.PORT;
+export const PORT = process.env.PORT || 3000;
 export const MONGO_PORT = process.env.MONGO_PORT || 27017;
 export const MONGO_IP = process.env.MONGO_IP || "mongo";
 export const MONGO_PASSWORD = process.env.MONGO_INITDB_ROOT_PASSWORD;

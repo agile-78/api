@@ -13,6 +13,7 @@ export async function register(req: Request, res: Response) {
     profilePic: req.file?.path || null,
   });
   const token = user.createJWT();
+
   res.status(StatusCodes.CREATED).send({
     token,
   });
