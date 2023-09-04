@@ -102,6 +102,7 @@ describe("User controller", () => {
         },
       } as Partial<Request> as Request;
       await expect(deleteUser(req, res)).to.be.eventually.fulfilled;
+
       await expect(
         access(user.profilePic as string, constants.F_OK)
       ).to.be.rejectedWith(Error);
