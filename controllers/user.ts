@@ -15,7 +15,7 @@ export const deleteUser = async (req: Request, res: Response) => {
   }
 
   if (user.profilePic) {
-    unlink(user.profilePic);
+    await unlink(user.profilePic);
   }
 
   res.status(StatusCodes.NO_CONTENT).send();
