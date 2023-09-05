@@ -11,3 +11,11 @@ export async function create(req: Request, res: Response) {
     reward,
   });
 }
+
+export async function get(req: Request, res: Response) {
+  const rewards = await Reward.find({});
+
+  res.status(StatusCodes.OK).send({
+    rewards,
+  });
+}
