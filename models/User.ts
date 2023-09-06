@@ -50,10 +50,29 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
   },
 });
 
-UserSchema.pre("save", async function () {
+async function hashMessage(secret: string) {
   const salt = await genSalt(10);
-  const hashPassword = await hash(this.password, salt);
-  this.password = hashPassword;
+  const hashedSecret = await hash(secret, salt);
+  return hashedSecret;
+}
+
+UserSchema.pre("save", async function () {
+  this.password = await hashMessage(this.password);
+});
+
+UserSchema.pre("findOneAndUpdate", async function () {
+  const update = this.getUpdate();
+
+  if (update === null) {
+    return;
+  }
+
+  if ("password" in update) {
+    this.setUpdate({
+      ...update,
+      password: await hashMessage(update.password),
+    });
+  }
 });
 
 UserSchema.methods.createJWT = function () {
