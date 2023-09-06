@@ -5,6 +5,7 @@ import { JWT_SECRET } from "../config/constant";
 
 export async function auth(req: Request, res: Response, next: NextFunction) {
   const authHeaders = req.headers.authorization;
+
   if (!authHeaders || !authHeaders.startsWith("Bearer ")) {
     throw new UnAuthenticatedError("Invalid token");
   }

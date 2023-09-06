@@ -43,8 +43,10 @@ export async function login(req: Request, res: Response) {
 
   const token = user.createJWT();
 
+  const { password: _, ...data } = user;
+
   res.status(StatusCodes.OK).send({
-    _id: user._id,
+    user: data,
     token,
   });
 }
