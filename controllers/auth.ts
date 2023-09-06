@@ -13,12 +13,13 @@ export async function register(req: Request, res: Response) {
     profilePic: req.file?.path || null,
   });
 
-  const { password, ...data } = user;
   const token = user.createJWT();
+
+  const { password, ...jsonUser } = user.toJSON();
 
   res.status(StatusCodes.CREATED).send({
     token,
-    user: data,
+    user: jsonUser,
   });
 }
 
@@ -43,10 +44,10 @@ export async function login(req: Request, res: Response) {
 
   const token = user.createJWT();
 
-  const { password: _, ...data } = user;
+  const { password: _, ...jsonUser } = user.toJSON();
 
   res.status(StatusCodes.OK).send({
-    user: data,
+    user: jsonUser,
     token,
   });
 }
