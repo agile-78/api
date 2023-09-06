@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { fileUpload } from "../middleware/fileUpload";
-import { create } from "../controllers/reward";
+import { create, get } from "../controllers/reward";
 
 export const router = Router();
 
-router.route("/").post(fileUpload.single("logo"), create);
+router.route("/").get(get).post(fileUpload.single("logo"), create);
