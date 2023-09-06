@@ -13,4 +13,4 @@ services:
 
   nginx:
     ports:
-      - "3000:80"
+      - "4000:80"
