@@ -8,9 +8,8 @@ export interface IUser {
   name: string;
   email: string;
   password: string;
-  address?: string;
-  contactNumber?: string;
   profilePic?: string;
+  referredBy?: Schema.Types.ObjectId;
 }
 
 export interface IUserMethods {
@@ -37,16 +36,12 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
     type: String,
     required: [true, "Password must be provided"],
   },
-  address: {
-    type: String,
-    maxlength: 100,
-  },
-  contactNumber: {
-    type: String,
-    maxlength: 50,
-  },
   profilePic: {
     type: String,
+  },
+  referredBy: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
   },
 });
 
@@ -63,7 +58,7 @@ UserSchema.pre("save", async function () {
 UserSchema.pre("findOneAndUpdate", async function () {
   const update = this.getUpdate();
 
-  if (update === null) {
+  if (update === null || update === undefined) {
     return;
   }
 
