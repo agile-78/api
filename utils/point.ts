@@ -1,15 +1,17 @@
 import { Schema } from "mongoose";
 import { Redemption } from "../models/Redemption";
 import { RecyclingActivity } from "../models/RecyclingActivity";
+import { IRecyclingMaterial, IReward } from "../models";
 
 export const queryUserPoints = async (id: Schema.Types.ObjectId) => {
   let redemptions = await Redemption.find({
     userId: id,
   })
     .select("rewardId")
-    .populate("rewardId");
+    .populate<{
+      rewardId: IReward;
+    }>("rewardId");
   let redempedPoints = redemptions.reduce((total, current) => {
-    // @ts-ignore
     return total + current.rewardId.points;
   }, 0);
 
@@ -17,10 +19,11 @@ export const queryUserPoints = async (id: Schema.Types.ObjectId) => {
     userId: id,
   })
     .select(["materialId", "quantity"])
-    .populate("materialId");
+    .populate<{
+      materialId: IRecyclingMaterial;
+    }>("materialId");
 
   let recyclingPoints = recycling.reduce((total, current) => {
-    // @ts-ignore
     return total + (current.quantity || 1) * current.materialId.points;
   }, 0);
 
