@@ -16,6 +16,7 @@ import {
   RecyclingActivity,
   RecyclingMaterial,
   Reward,
+  IUserMethods,
 } from "../../models";
 import { StatusCodes } from "http-status-codes";
 import { access } from "fs/promises";
@@ -71,6 +72,27 @@ describe("User controller", () => {
       await expect(updateUser(mockRequest, res)).to.eventually.fulfilled;
       assert.isTrue(status.calledOnceWith(StatusCodes.OK));
       expect(updatedUser.name).to.equal("updated");
+    });
+
+    it("new password is hashed", async () => {
+      const { res } = createFakeResponse();
+
+      const user = await createDummyUser();
+
+      const mockRequest = {
+        body: {
+          password: "newPassword",
+        },
+        params: {
+          id: user._id as unknown as string,
+        },
+      } as Partial<Request> as Request;
+
+      await expect(updateUser(mockRequest, res)).to.eventually.fulfilled;
+      const updatedUser = await User.findById(user._id);
+      await expect(
+        updatedUser?.comparePassword("newPassword")
+      ).to.eventually.be.equals(true);
     });
   });
 

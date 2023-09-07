@@ -9,7 +9,7 @@ import {
 } from "../../errors";
 import { User } from "../../models";
 import { StatusCodes } from "http-status-codes";
-import { Jwt, verify } from "jsonwebtoken";
+import { verify } from "jsonwebtoken";
 import { JWT_SECRET } from "../../config/constant";
 import { createFakeResponse } from "../utils/helpers";
 import { JwtPayload } from "../../types/jsonwebtoken";
