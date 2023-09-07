@@ -3,7 +3,14 @@ import { Error } from "mongoose";
 import { Request, Response } from "express";
 import Sinon from "sinon";
 import { NotFoundError } from "../../errors";
-import { User } from "../../models";
+import {
+  IRedemption,
+  IReward,
+  IUser,
+  Redemption,
+  Reward,
+  User,
+} from "../../models";
 import { writeFile } from "fs/promises";
 
 export function createModelTest<T, S, D>(
@@ -73,7 +80,7 @@ export function createFakeResponse(
   };
 }
 
-export async function createDummyUser(body?: any) {
+export async function createDummyUser(body?: Partial<IUser>) {
   return await User.create({
     name: "test",
     email: "test@gmail.com",
@@ -91,4 +98,60 @@ export async function createDummyUserWithProfilePic() {
   });
 
   return user;
+}
+
+export async function createDummyReward(body?: Partial<IReward>) {
+  return await Reward.create({
+    title: "test",
+    points: 30,
+    logo: "./imgs/desktop.png",
+    ...body,
+  });
+}
+
+export async function createDummyRedemption(body?: Partial<IRedemption>) {
+  if (!body?.userId) {
+    const user = await createDummyUser();
+    body = {
+      userId: user._id,
+      ...body,
+    };
+  }
+
+  if (!body?.rewardId) {
+    const reward = await createDummyReward();
+    body = {
+      rewardId: reward._id,
+      ...body,
+    };
+  }
+
+  return await Redemption.create({
+    ...body,
+  });
+}
+
+export async function createDummyUserRewardAndRedemption() {
+  const user = await createDummyUser();
+  const reward = await createDummyReward();
+  const redemption = await createDummyRedemption({
+    userId: user._id,
+    rewardId: reward._id,
+  });
+  return {
+    user,
+    reward,
+    redemption,
+  };
+}
+
+export async function runIfNotExist<Model>(
+  val: Model | null | undefined,
+  callback: () => Promise<Model>
+) {
+  if (val === undefined || val === null) {
+    return await callback();
+  }
+
+  return val;
 }
