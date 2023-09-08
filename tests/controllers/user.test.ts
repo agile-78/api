@@ -16,11 +16,11 @@ import {
   RecyclingActivity,
   RecyclingMaterial,
   Reward,
-  IUserMethods,
 } from "../../models";
 import { StatusCodes } from "http-status-codes";
 import { access } from "fs/promises";
 import { constants } from "fs";
+import { HydratedDocument } from "mongoose";
 
 use(chaiAsPromised);
 describe("User controller", () => {
@@ -132,7 +132,7 @@ describe("User controller", () => {
   });
 
   describe("get points", () => {
-    let user: IUser;
+    let user: HydratedDocument<IUser>;
     before(async () => {
       user = await createDummyUser();
       let reward = await Reward.create({

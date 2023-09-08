@@ -18,13 +18,14 @@ import {
   IRecyclingMaterialMethods,
   RecyclingMaterial,
 } from "../../models";
+import { HydratedDocument } from "mongoose";
 
 use(chaiAsPromised);
 
 describe("RecyclingActivity model", () => {
   let recyclingActivity: IRecyclingActivity & IRecyclingActivityMethods;
-  let user: IUser & IUserMethods;
-  let material: IRecyclingMaterial & IRecyclingMaterialMethods;
+  let user: HydratedDocument<IUser>;
+  let material: HydratedDocument<IRecyclingMaterial>;
   const RecyclingActivityData: Partial<IRecyclingActivity> = {
     materialId: undefined,
     userId: undefined,

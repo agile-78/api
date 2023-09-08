@@ -3,13 +3,14 @@ import { createFakeResponse } from "../utils/helpers";
 import { Request } from "express";
 import { create } from "../../controllers/redemption";
 import { expect } from "chai";
-import { IUser, IUserMethods, User } from "../../models";
+import { IUser, User } from "../../models";
 import { IReward, IRewardMethods, Reward } from "../../models";
+import { HydratedDocument } from "mongoose";
 
 describe("Redemption Controller", () => {
   describe("post", () => {
-    let user: IUser & IUserMethods;
-    let reward: IReward & IRewardMethods;
+    let user: HydratedDocument<IUser>;
+    let reward: HydratedDocument<IReward>;
     const { res, status } = createFakeResponse((data) => {});
 
     const mockRequest = {

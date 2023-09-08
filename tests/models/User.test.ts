@@ -5,7 +5,7 @@ import chaiAsPromised from "chai-as-promised";
 import { JwtPayload, verify } from "jsonwebtoken";
 import { JWT_SECRET } from "../../config/constant";
 
-import { Error } from "mongoose";
+import { Error, HydratedDocument } from "mongoose";
 import {
   cannotCreateModelWithoutRequiredFieldsTest,
   createModelTest,
@@ -14,7 +14,7 @@ import {
 use(chaiAsPromised);
 
 describe("User model", () => {
-  let user: IUser & IUserMethods;
+  let user: HydratedDocument<IUser, IUserMethods>;
   const userData = {
     name: "Test",
     email: "test@gmail.com",
