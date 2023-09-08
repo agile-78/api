@@ -34,6 +34,7 @@ app.use(helmet());
 app.use(cors());
 
 app.use("/imgs", express.static("./imgs"));
+app.use("/imgs", express.static("./public"));
 
 app.use("/api/v1/auth", authRoutes);
 
