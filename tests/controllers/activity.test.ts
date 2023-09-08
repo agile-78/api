@@ -2,21 +2,19 @@ import { describe } from "mocha";
 import { createDummyUser, createFakeResponse } from "../utils/helpers";
 import { Request } from "express";
 import { assert, expect } from "chai";
-import { IRecyclingActivity, IRecyclingActivityMethods } from "../../models";
-import { create } from "../../controllers/activity";
-import { StatusCodes } from "http-status-codes";
-import { IUser, IUserMethods } from "../../models";
 import {
-  IRecyclingMaterial,
-  IRecyclingMaterialMethods,
+  IRecyclingActivity,
+  IRecyclingActivityMethods,
   RecyclingMaterial,
 } from "../../models";
+import { create } from "../../controllers/activity";
+import { StatusCodes } from "http-status-codes";
 
 describe("materi Controller", () => {
   describe("post", () => {
     let ActiviRecyclingActivity: IRecyclingActivity & IRecyclingActivityMethods;
-    let user: IUser & IUserMethods;
-    let material: IRecyclingMaterial & IRecyclingMaterialMethods;
+    let user;
+    let material;
 
     const mockRequest = {
       body: {

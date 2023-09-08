@@ -8,11 +8,12 @@ import { expect, use } from "chai";
 import { queryUserPoints } from "../../utils/point";
 import chaiAsPromised from "chai-as-promised";
 import { IUser } from "../../models/User";
+import { HydratedDocument } from "mongoose";
 
 use(chaiAsPromised);
 
 describe("QueryUserPoints", () => {
-  let user: IUser;
+  let user: HydratedDocument<IUser>;
   before(async () => {
     user = await createDummyUser();
     let reward = await Reward.create({

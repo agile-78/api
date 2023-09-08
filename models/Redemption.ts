@@ -1,9 +1,8 @@
-import { Model, Schema, model } from "mongoose";
+import { Model, Schema, Types, model } from "mongoose";
 
 export interface IRedemption {
-  _id: Schema.Types.ObjectId;
-  userId: Schema.Types.ObjectId;
-  rewardId: Schema.Types.ObjectId;
+  userId: Types.ObjectId;
+  rewardId: Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }

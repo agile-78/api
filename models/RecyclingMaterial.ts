@@ -1,7 +1,6 @@
 import { Model, Schema, model } from "mongoose";
 
 export interface IRecyclingMaterial {
-  _id: Schema.Types.ObjectId;
   name: string;
   points: number;
 }

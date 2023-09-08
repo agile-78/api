@@ -1,9 +1,9 @@
-import { Schema } from "mongoose";
+import { Types } from "mongoose";
 import { Redemption } from "../models/Redemption";
 import { RecyclingActivity } from "../models/RecyclingActivity";
 import { IRecyclingMaterial, IReward } from "../models";
 
-export const queryUserPoints = async (id: Schema.Types.ObjectId) => {
+export const queryUserPoints = async (id: Types.ObjectId) => {
   let redemptions = await Redemption.find({
     userId: id,
   })

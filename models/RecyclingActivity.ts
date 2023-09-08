@@ -1,9 +1,8 @@
-import { Model, Schema, model } from "mongoose";
+import { Model, Schema, Types, model } from "mongoose";
 
 export interface IRecyclingActivity {
-  _id: Schema.Types.ObjectId;
-  materialId: Schema.Types.ObjectId;
-  userId: Schema.Types.ObjectId;
+  materialId: Types.ObjectId;
+  userId: Types.ObjectId;
   quantity: number;
   createdAt: Date;
   updatedAt: Date;

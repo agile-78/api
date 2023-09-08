@@ -1,5 +1,5 @@
 import { assert, expect } from "chai";
-import { Error } from "mongoose";
+import { Error, HydratedDocument } from "mongoose";
 import { Request, Response } from "express";
 import Sinon from "sinon";
 import { NotFoundError } from "../../errors";
@@ -80,7 +80,9 @@ export function createFakeResponse(
   };
 }
 
-export async function createDummyUser(body?: Partial<IUser>) {
+export async function createDummyUser(
+  body?: Partial<IUser>
+): Promise<HydratedDocument<IUser>> {
   return await User.create({
     name: "test",
     email: "test@gmail.com",

@@ -1,5 +1,5 @@
 import { describe } from "mocha";
-import { IRedemption, IRedemptionMethods, Redemption } from "../../models";
+import { IRedemption, Redemption } from "../../models";
 import { expect, use } from "chai";
 import chaiAsPromised from "chai-as-promised";
 
@@ -7,20 +7,20 @@ import {
   cannotCreateModelWithoutRequiredFieldsTest,
   createModelTest,
 } from "../utils/helpers";
-import { IUser, IUserMethods, User } from "../../models";
-import { Schema, Error } from "mongoose";
-import { IReward, IRewardMethods, Reward } from "../../models";
+import { User } from "../../models";
+import { Error, HydratedDocument, Types } from "mongoose";
+import { Reward } from "../../models";
 
 use(chaiAsPromised);
 
 describe("Redemption model", () => {
-  let redemption: IRedemption & IRedemptionMethods;
-  let user: IUser & IUserMethods;
-  let reward: IReward & IRewardMethods;
+  let redemption: HydratedDocument<IRedemption>;
+  let user;
+  let reward;
 
   const redemptionData: {
-    userId: null | Schema.Types.ObjectId;
-    rewardId: null | Schema.Types.ObjectId;
+    userId: null | Types.ObjectId;
+    rewardId: null | Types.ObjectId;
   } = {
     userId: null,
     rewardId: null,

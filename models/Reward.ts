@@ -1,7 +1,6 @@
 import { Model, Schema, model } from "mongoose";
 
 export interface IReward {
-  _id: Schema.Types.ObjectId;
   logo: string;
   title: string;
   points: number;

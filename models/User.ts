@@ -1,15 +1,14 @@
 import { compare, genSalt, hash } from "bcryptjs";
 import { sign } from "jsonwebtoken";
-import { Model, Schema, model } from "mongoose";
+import { Model, Schema, Types, model } from "mongoose";
 import { JWT_LIFETIME, JWT_SECRET } from "../config/constant";
 
 export interface IUser {
-  _id: Schema.Types.ObjectId;
   name: string;
   email: string;
   password: string;
   profilePic?: string;
-  referredBy?: Schema.Types.ObjectId;
+  referredBy?: Types.ObjectId;
 }
 
 export interface IUserMethods {
@@ -62,7 +61,7 @@ UserSchema.pre("findOneAndUpdate", async function () {
     return;
   }
 
-  if ("password" in update) {
+  if ("password" in update && update.password) {
     this.setUpdate({
       ...update,
       password: await hashMessage(update.password),
