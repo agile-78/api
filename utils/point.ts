@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 import { Redemption } from "../models/Redemption";
 import { RecyclingActivity } from "../models/RecyclingActivity";
-import { IRecyclingMaterial, IReward } from "../models";
+import { IRecyclingMaterial, IReward, User } from "../models";
 
 export const queryUserPoints = async (id: Types.ObjectId) => {
   let redemptions = await Redemption.find({
@@ -27,7 +27,13 @@ export const queryUserPoints = async (id: Types.ObjectId) => {
     return total + (current.quantity || 1) * current.materialId.points;
   }, 0);
 
-  let totalPoints = recyclingPoints - redempedPoints;
+  let referrealCount = await User.countDocuments({
+    referredBy: id,
+  });
+
+  let referralPoints = referrealCount * 10;
+
+  let totalPoints = referralPoints + recyclingPoints - redempedPoints;
 
   return totalPoints;
 };
