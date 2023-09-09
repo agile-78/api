@@ -1,7 +1,5 @@
 import { before, describe, it } from "mocha";
-import { createDummyUser } from "./helpers";
-import { Reward } from "../../models/Reward";
-import { Redemption } from "../../models/Redemption";
+import { createDummyUser, createDummyUserRewardAndRedemption } from "./helpers";
 import { RecyclingMaterial } from "../../models/RecyclingMaterial";
 import { RecyclingActivity } from "../../models/RecyclingActivity";
 import { expect, use } from "chai";
@@ -14,17 +12,17 @@ use(chaiAsPromised);
 
 describe("QueryUserPoints", () => {
   let user: HydratedDocument<IUser>;
+  let totalPoints = 0;
   before(async () => {
-    user = await createDummyUser();
-    let reward = await Reward.create({
-      title: "test reard",
-      points: 30,
-      logo: "invalid.png",
-    });
-    let redemption = await Redemption.create({
-      userId: user._id,
-      rewardId: reward._id,
-    });
+    const {
+      redemption,
+      user: dummyUser,
+      reward,
+    } = await createDummyUserRewardAndRedemption();
+
+    totalPoints = -reward.points;
+
+    user = dummyUser;
 
     let material = await RecyclingMaterial.create({
       name: "test material",
@@ -35,8 +33,15 @@ describe("QueryUserPoints", () => {
       materialId: material._id,
       quantity: 2,
     });
+
+    await createDummyUser({
+      referredBy: user._id,
+      email: "test2@gmail.com",
+    });
+
+    totalPoints += activity.quantity * material.points + 10;
   });
   it("returns the correct point", async () => {
-    expect(queryUserPoints(user._id)).to.eventually.equals(30);
+    await expect(queryUserPoints(user._id)).to.eventually.equals(totalPoints);
   });
 });
