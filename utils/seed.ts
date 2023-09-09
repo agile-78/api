@@ -34,7 +34,16 @@ export async function seed() {
     },
   ];
 
-  const materialData: IRecyclingMaterial[] = [];
+  const materialData: IRecyclingMaterial[] = [
+    {
+      name: "plastic",
+      points: 30,
+    },
+    {
+      name: "metal",
+      points: 20,
+    },
+  ];
 
   await Reward.insertMany(rewardData);
   await RecyclingMaterial.insertMany(materialData);
