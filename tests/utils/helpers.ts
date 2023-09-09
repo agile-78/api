@@ -1,12 +1,16 @@
 import { assert, expect } from "chai";
-import { Error, HydratedDocument } from "mongoose";
+import { Error, HydratedDocument, Types } from "mongoose";
 import { Request, Response } from "express";
 import Sinon from "sinon";
 import { NotFoundError } from "../../errors";
 import {
+  IRecyclingActivity,
+  IRecyclingMaterial,
   IRedemption,
   IReward,
   IUser,
+  RecyclingActivity,
+  RecyclingMaterial,
   Redemption,
   Reward,
   User,
@@ -147,8 +151,38 @@ export async function createDummyUserRewardAndRedemption() {
   };
 }
 
+export async function createDummyMaterial(body?: Partial<IRecyclingMaterial>) {
+  return await RecyclingMaterial.create({
+    name: "plastic",
+    points: 30,
+    ...body,
+  });
+}
+
+export async function createDummyActivity(body?: Partial<IRecyclingActivity>) {
+  if (!body?.userId) {
+    const user = await createDummyUser();
+    body = {
+      userId: user._id,
+      ...body,
+    };
+  }
+
+  if (!body?.materialId) {
+    const material = await createDummyMaterial();
+    body = {
+      materialId: material._id,
+      ...body,
+    };
+  }
+  return await RecyclingActivity.create({
+    quantity: 1,
+    ...body,
+  });
+}
+
 export async function runIfNotExist<Model>(
-  val: Model | null | undefined,
+  val: Model | null | undefined | Types.ObjectId,
   callback: () => Promise<Model>
 ) {
   if (val === undefined || val === null) {
