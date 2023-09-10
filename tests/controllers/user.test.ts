@@ -3,11 +3,19 @@ import { Request } from "express";
 import chaiAsPromised from "chai-as-promised";
 import {
   NotFoundErrorisThrownForInvalidId,
+  createDummyActivity,
+  createDummyDataForReferralCount,
+  createDummyRedemption,
   createDummyUser,
   createDummyUserWithProfilePic,
   createFakeResponse,
 } from "../utils/helpers";
-import { deleteUser, getUserPoints, updateUser } from "../../controllers/user";
+import {
+  deleteUser,
+  getUserPoints,
+  getUserReferredCount,
+  updateUser,
+} from "../../controllers/user";
 import {
   IUser,
   User,
@@ -21,6 +29,7 @@ import { StatusCodes } from "http-status-codes";
 import { access } from "fs/promises";
 import { constants } from "fs";
 import { HydratedDocument } from "mongoose";
+import { create } from "../../controllers/reward";
 
 use(chaiAsPromised);
 describe("User controller", () => {
@@ -135,24 +144,17 @@ describe("User controller", () => {
     let user: HydratedDocument<IUser>;
     before(async () => {
       user = await createDummyUser();
-      let reward = await Reward.create({
-        title: "test reard",
-        points: 30,
-        logo: "invalid.png",
-      });
-      let redemption = await Redemption.create({
+      await createDummyRedemption({
         userId: user._id,
-        rewardId: reward._id,
       });
 
-      let material = await RecyclingMaterial.create({
-        name: "test material",
-        points: 30,
-      });
-      let activity = await RecyclingActivity.create({
+      await createDummyActivity({
         userId: user._id,
-        materialId: material._id,
-        quantity: 2,
+      });
+
+      await createDummyUser({
+        email: "test2@gmail.com",
+        referredBy: user._id,
       });
     });
 
@@ -160,6 +162,7 @@ describe("User controller", () => {
       let points: number;
       const { res, status } = createFakeResponse((data) => {
         points = data.points;
+        expect(points).to.equals(10);
       });
 
       await expect(
@@ -172,6 +175,33 @@ describe("User controller", () => {
           res
         )
       ).to.fulfilled;
+    });
+  });
+
+  describe("get referral count", () => {
+    let referrealCount = 3;
+    let user: HydratedDocument<IUser>;
+    beforeEach(async () => {
+      user = await createDummyDataForReferralCount(referrealCount);
+    });
+
+    it("returned the correct response", async () => {
+      const { res, status } = createFakeResponse((data) => {
+        expect(data.count).to.equals(referrealCount);
+      });
+
+      await expect(
+        getUserReferredCount(
+          {
+            params: {
+              id: user._id,
+            },
+          } as unknown as Request,
+          res
+        )
+      ).to.eventually.fulfilled;
+
+      status.calledOnceWithExactly(StatusCodes.OK);
     });
   });
 });
