@@ -137,9 +137,15 @@ export async function createDummyRedemption(body?: Partial<IRedemption>) {
   });
 }
 
-export async function createDummyUserRewardAndRedemption() {
-  const user = await createDummyUser();
-  const reward = await createDummyReward();
+export async function createDummyUserRewardAndRedemption({
+  user,
+  reward,
+}: {
+  user?: HydratedDocument<IUser>;
+  reward?: HydratedDocument<IReward>;
+} = {}) {
+  user = await runIfNotExist<HydratedDocument<IUser>>(user, createDummyUser);
+  reward = await runIfNotExist(reward, createDummyReward);
   const redemption = await createDummyRedemption({
     userId: user._id,
     rewardId: reward._id,
@@ -181,8 +187,29 @@ export async function createDummyActivity(body?: Partial<IRecyclingActivity>) {
   });
 }
 
+export async function createDummyUserMaterialAndActvity({
+  user,
+  material,
+}: {
+  user?: HydratedDocument<IUser>;
+  material?: HydratedDocument<IRecyclingMaterial>;
+} = {}) {
+  user = await runIfNotExist(user, createDummyUser);
+  material = await runIfNotExist(material, createDummyMaterial);
+  const activity = await createDummyActivity({
+    userId: user._id,
+    materialId: material._id,
+  });
+
+  return {
+    user,
+    material,
+    activity,
+  };
+}
+
 export async function runIfNotExist<Model>(
-  val: Model | null | undefined | Types.ObjectId,
+  val: Model | null | undefined,
   callback: () => Promise<Model>
 ) {
   if (val === undefined || val === null) {
@@ -190,4 +217,28 @@ export async function runIfNotExist<Model>(
   }
 
   return val;
+}
+
+export async function createDummyDataForReferralCount(count: number) {
+  let user: HydratedDocument<IUser> = await createDummyUser();
+  for (let i = 0; i < count; i++) {
+    await createDummyUser({
+      email: `test${i}@gmail.com`,
+      referredBy: user._id,
+    });
+  }
+
+  return user;
+}
+
+export async function createDummyDataForCountingPoints() {
+  const { user, reward } = await createDummyUserRewardAndRedemption();
+  const { material, activity } = await createDummyUserMaterialAndActvity({
+    user,
+  });
+  await createDummyUser({
+    email: "test2@gmail.com",
+    referredBy: user._id,
+  });
+  return reward.points + material.points * activity.quantity + 10;
 }
