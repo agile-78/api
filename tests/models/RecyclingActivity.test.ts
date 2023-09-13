@@ -12,12 +12,8 @@ import {
   createDummyUser,
   createModelTest,
 } from "../utils/helpers";
-import { IUser, IUserMethods, User } from "../../models";
-import {
-  IRecyclingMaterial,
-  IRecyclingMaterialMethods,
-  RecyclingMaterial,
-} from "../../models";
+import { IUser } from "../../models";
+import { IRecyclingMaterial, RecyclingMaterial } from "../../models";
 import { HydratedDocument } from "mongoose";
 
 use(chaiAsPromised);

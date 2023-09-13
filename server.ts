@@ -15,6 +15,7 @@ import {
   userRoutes,
   materialRoutes,
   activityRoutes,
+  mlRoutes,
 } from "./routes";
 
 export const app = express();
@@ -45,6 +46,7 @@ app.use("/api/v1/rewards", rewardRoutes);
 app.use("/api/v1/redemptions", redemptionRoutes);
 app.use("/api/v1/material", materialRoutes);
 app.use("/api/v1/activity", activityRoutes);
+app.use("/api/v1/classify", mlRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
