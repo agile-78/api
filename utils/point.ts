@@ -41,3 +41,9 @@ export const queryReferredCount = async (id: string | Types.ObjectId) => {
     referredBy: id,
   });
 };
+
+export const queryRecycleCount = async (id: string | Types.ObjectId) => {
+  return await RecyclingActivity.countDocuments({
+    userId: id,
+  });
+};

@@ -3,8 +3,11 @@ import { User } from "../models";
 import { NotFoundError } from "../errors";
 import { StatusCodes } from "http-status-codes";
 import { unlink } from "fs/promises";
-import { queryReferredCount, queryUserPoints } from "../utils/point";
-import { Types } from "mongoose";
+import {
+  queryRecycleCount,
+  queryReferredCount,
+  queryUserPoints,
+} from "../utils/point";
 
 export const deleteUser = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -59,6 +62,14 @@ export const getUserPoints = async (req: Request, res: Response) => {
 export const getUserReferredCount = async (req: Request, res: Response) => {
   const { id } = req.params;
   const count = await queryReferredCount(id);
+  res.status(StatusCodes.OK).send({
+    count,
+  });
+};
+
+export const getUserRecycleCount = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const count = await queryRecycleCount(id);
   res.status(StatusCodes.OK).send({
     count,
   });
