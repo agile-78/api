@@ -7,7 +7,7 @@ services:
       - "443:443"
     volumes:
       - ./nginx/default.prod.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./nginx/tharlinshwe.social.crt:/etc/ssl/certs/tharlinshwe.social.crt.crt:ro
+      - ./nginx/tharlinshwe.social.crt:/etc/ssl/certs/tharlinshwe.social.crt:ro
       - ./nginx/tharlinshwe.social.key:/etc/ssl/private/tharlinshwe.social.key:ro
 
   api:
