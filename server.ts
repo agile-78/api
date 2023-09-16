@@ -44,8 +44,8 @@ app.use(auth);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/rewards", rewardRoutes);
 app.use("/api/v1/redemptions", redemptionRoutes);
-app.use("/api/v1/material", materialRoutes);
-app.use("/api/v1/activity", activityRoutes);
+app.use("/api/v1/materials", materialRoutes);
+app.use("/api/v1/activities", activityRoutes);
 app.use("/api/v1/classify", mlRoutes);
 
 app.use(notFound);
