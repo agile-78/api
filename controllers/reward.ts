@@ -1,6 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { Reward } from "../models";
 import { Request, Response } from "express";
+import { generalGet } from "../utils/controller";
 
 export async function create(req: Request, res: Response) {
   const reward = await Reward.create({
