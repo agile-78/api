@@ -1,6 +1,7 @@
 import { StatusCodes } from "http-status-codes";
-import { RecyclingMaterial } from "../models";
+import { IRecyclingMaterial, RecyclingMaterial } from "../models";
 import { Request, Response } from "express";
+import { generateGetAll } from "../utils/controller";
 
 export async function create(req: Request, res: Response) {
   const reward = await RecyclingMaterial.create(req.body);
@@ -8,3 +9,9 @@ export async function create(req: Request, res: Response) {
     reward,
   });
 }
+
+export const getAll = generateGetAll<IRecyclingMaterial>(
+  RecyclingMaterial,
+  undefined,
+  undefined
+);
