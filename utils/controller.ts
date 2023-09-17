@@ -9,6 +9,7 @@ export function generateGetAll<T>(
 ) {
   return async function (req: Request, res: Response) {
     const query = req.query;
+
     const size = parseInt(query.size as string) || undefined;
     const page = parseInt(query.page as string) || 1;
 
