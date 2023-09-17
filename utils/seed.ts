@@ -36,12 +36,16 @@ export async function seed() {
 
   const materialData: IRecyclingMaterial[] = [
     {
-      name: "plastic",
+      name: "Plastic Bottle",
       points: 30,
     },
     {
-      name: "metal",
+      name: "Aluminium Can",
       points: 20,
+    },
+    {
+      name: "Paper",
+      points: 10,
     },
   ];
 
