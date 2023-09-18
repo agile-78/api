@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { create } from "../controllers/redemption";
+import { create, getAll } from "../controllers/redemption";
 
 export const router = Router();
 
-router.route("/").post(create);
+router.route("/").get(getAll).post(create);

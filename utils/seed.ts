@@ -10,17 +10,17 @@ export async function seed() {
     {
       title: "5$ voucher starbuck",
       points: 500,
-      logo: "imgs/starbuck_logo.png",
+      logo: "/starbuck_logo.png",
     },
     {
       title: "$5 voucher Ligo",
       points: 500,
-      logo: "imgs/liho.png",
+      logo: "/liho.png",
     },
     {
       title: "$5 voucher burger king",
       points: 500,
-      logo: "imgs/burger_king.png",
+      logo: "/burger_king.png",
     },
   ];
 
