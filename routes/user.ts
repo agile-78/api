@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   deleteUser,
+  getUser,
   getUserPoints,
   getUserRecycleCount,
   getUserReferredCount,
@@ -15,5 +16,6 @@ router.route("/:id/recyclecount").get(getUserRecycleCount);
 
 router
   .route("/:id")
+  .get(getUser)
   .patch(fileUpload.single("profilePic"), updateUser)
   .delete(deleteUser);

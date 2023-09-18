@@ -9,6 +9,21 @@ import {
   queryUserPoints,
 } from "../utils/point";
 
+export const getUser = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+
+  if (!user) {
+    throw new NotFoundError("Cannot find user");
+  }
+
+  const { password: _, ...jsonUser } = user.toJSON();
+
+  res.status(StatusCodes.OK).send({
+    user: jsonUser,
+  });
+};
+
 export const deleteUser = async (req: Request, res: Response) => {
   const { id } = req.params;
   const user = await User.findByIdAndDelete(id);
