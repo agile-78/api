@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { create, getAll } from "../controllers/material";
+import { create, get, getAll } from "../controllers/material";
 
 export const router = Router();
 
 router.route("/").post(create).get(getAll);
+router.route("/:id").get(get);
