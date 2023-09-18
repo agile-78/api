@@ -8,17 +8,17 @@ import {
 export async function seed() {
   const rewardData: Array<IReward> = [
     {
-      title: "5$ voucher starbuck",
+      title: "5$ voucher Starbuck",
       points: 500,
       logo: "/starbuck_logo.png",
     },
     {
-      title: "$5 voucher Ligo",
+      title: "$5 voucher Liho",
       points: 500,
       logo: "/liho.png",
     },
     {
-      title: "$5 voucher burger king",
+      title: "$5 voucher Burger king",
       points: 500,
       logo: "/burger_king.png",
     },
