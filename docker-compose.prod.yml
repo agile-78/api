@@ -11,6 +11,13 @@ services:
       - ./nginx/tharlinshwe.social.key:/etc/ssl/private/tharlinshwe.social.key:ro
 
   api:
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: any
+      update_config:
+        parallelism: 2
+        delay: 15s
     build:
       context: .
       target: prod
